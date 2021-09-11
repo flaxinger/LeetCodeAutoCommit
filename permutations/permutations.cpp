@@ -5,10 +5,9 @@ public:
     vector<vector<int>> ans;
     int vs[6];
     vector<int> _nums;
+    vector<int> cur;
     
-    
-    void permute(int cnt, vector<int> cur){
-        
+    void permute(int cnt){
         
         if(cnt == N){
             ans.push_back(cur);
@@ -18,7 +17,7 @@ public:
             if(!vs[i]){
                 vs[i] = 1;
                 cur.push_back(_nums[i]);
-                permute(cnt+1, cur);
+                permute(cnt+1);
                 cur.pop_back();
                 vs[i] = 0;
             }
@@ -30,7 +29,7 @@ public:
         N = nums.size();
         _nums = nums;
         
-        permute(0, vector<int>());
+        permute(0);
         return ans;
     }
 };
