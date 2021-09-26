@@ -1,68 +1,38 @@
-/**
- * Definition for a binary tree node.
- * public class TreeNode {
- *     int val;
- *     TreeNode left;
- *     TreeNode right;
- *     TreeNode(int x) { val = x; }
- * }
- */
-
-import java.math.*;
 public class Codec {
-    
-    private ArrayList<String> arr;    
-    String[] arr_build;
-    HashMap<BigInteger, Integer> map;
-        
-    private void preorder(TreeNode node, BigInteger idx){
+    private static final String spliter = ",";
+    private static final String NN = "X";
 
-        arr.add(idx+"."+String.valueOf(node.val));
-        if(node.left!=null) preorder(node.left, idx.multiply(new BigInteger("2")));
-        if(node.right!=null) preorder(node.right, idx.multiply(new BigInteger("2")).add(new BigInteger("1")));
-        
-    }
-
-    private TreeNode build(BigInteger idx){
-        
-        if(!map.containsKey(idx)) return null;
-        TreeNode a = new TreeNode(map.get(idx));
-        a.left = build(idx.multiply(new BigInteger("2")));
-        a.right = build(idx.multiply(new BigInteger("2")).add(new BigInteger("1")));
-        return a;
-    }
-    
-    
     // Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-        if(root == null) return "";
-        arr = new ArrayList<String>();
-        preorder(root, new BigInteger("1"));
-        return arr.toString();
+        StringBuilder sb = new StringBuilder();
+        buildString(root, sb);
+        return sb.toString();
     }
 
+    private void buildString(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append(NN).append(spliter);
+        } else {
+            sb.append(node.val).append(spliter);
+            buildString(node.left, sb);
+            buildString(node.right,sb);
+        }
+    }
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-
-        if(data == "") return null;
-        map = new HashMap<BigInteger, Integer>();
-        data = data.replace("[", "");
-        data = data.replace("]", "");
-        arr_build = data.split(", ");
-        System.out.println(data);
-        
-        for(String buff: arr_build){
-            BigInteger ee = new BigInteger(buff.substring(0, buff.indexOf(".")));
-            System.out.println(ee);
-            map.put(ee, Integer.valueOf(buff.substring(buff.indexOf(".")+1)));
+        Deque<String> nodes = new LinkedList<>();
+        nodes.addAll(Arrays.asList(data.split(spliter)));
+        return buildTree(nodes);
+    }
+    
+    private TreeNode buildTree(Deque<String> nodes) {
+        String val = nodes.remove();
+        if (val.equals(NN)) return null;
+        else {
+            TreeNode node = new TreeNode(Integer.valueOf(val));
+            node.left = buildTree(nodes);
+            node.right = buildTree(nodes);
+            return node;
         }
-        
-        return build(new BigInteger("1"));
-        
     }
 }
-
-// Your Codec object will be instantiated and called as such:
-// Codec ser = new Codec();
-// Codec deser = new Codec();
-// TreeNode ans = deser.deserialize(ser.serialize(root));
