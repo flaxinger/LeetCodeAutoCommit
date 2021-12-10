@@ -1,3 +1,4 @@
+[Discussion Post (created on 10/11/2021 at 23:56)](https://leetcode.com/problems/sort-list/discuss/1621620/Quick-Sort-Perhaps)  
 <h2>148. Sort List</h2><h3>Medium</h3><hr><div><p>Given the <code>head</code> of a linked list, return <em>the list after sorting it in <strong>ascending order</strong></em>.</p>
 
 <p>&nbsp;</p>
