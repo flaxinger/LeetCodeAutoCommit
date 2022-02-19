@@ -6,7 +6,7 @@ class Solution {
     public List<List<Integer>> fourSum(int[] _nums, int _target) {
         target = _target;
         nums = reduce(_nums).toArray(new Integer[0]);
-        N = nums.length;
+        N = nums.length-1;
         Arrays.sort(nums);
         traverse(new ArrayList<>(), 0, 0);
         return ans;
@@ -22,15 +22,12 @@ class Solution {
             }
         }
         else{
-            int lookingFor = target-sum;
-            while(idx < N && nums[idx] <= lookingFor){
-                if(nums[idx]==lookingFor){
-                    list.add(nums[idx]);
-                    if(!ans.contains(list))
-                        ans.add(cloneList(list));
-                    list.remove(3);
-                }
-                idx++;
+            idx = isComb(idx, target-sum);
+            if(idx > 0){
+                list.add(nums[idx]);
+                if(!ans.contains(list))
+                    ans.add(cloneList(list));
+                list.remove(3);
             }
         }
     }
@@ -54,5 +51,23 @@ class Solution {
             }
         }
         return result;
+    }
+    
+    private int isComb(int start, int tar){
+        
+        if(nums[start] == tar) return start;
+        
+        int mid = 0;
+        int end = N;
+        while(start+1 < end){
+            mid = (start+end)/2;
+            if(nums[mid] < tar)
+                start = mid;
+            else
+                end = mid;
+        }
+        
+        if(nums[end]==tar) return end;
+        return -1;
     }
 }
