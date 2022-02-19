@@ -24,8 +24,8 @@ class Solution {
         else{
             int lookingFor = target-sum;
             int cur = Integer.MIN_VALUE;
-            while(idx < N && nums[idx] > cur){
-                if(nums[idx]==lookingFor){
+            while(idx < N){
+                if(nums[idx]==lookingFor && nums[idx] > cur){
                     list.add(nums[idx]);
                     if(!ans.contains(list))
                         ans.add(cloneList(list));
