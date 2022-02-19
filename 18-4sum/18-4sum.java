@@ -17,7 +17,7 @@ class Solution {
         if(list.size() < 3){
             while(idx < N){
                 list.add(nums[idx]);
-                traverse(list, sum+nums[idx], ++idx);
+                traverse(cloneList(list), sum+nums[idx], ++idx);
                 list.remove(list.size()-1);
             }
         }
@@ -26,8 +26,7 @@ class Solution {
             if(idx > 0){
                 list.add(nums[idx]);
                 if(!ans.contains(list))
-                    ans.add(cloneList(list));
-                list.remove(3);
+                    ans.add(list);
             }
         }
     }
