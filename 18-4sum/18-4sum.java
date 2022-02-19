@@ -24,15 +24,12 @@ class Solution {
             }
         }
         else{
-            List<Integer> newList = cloneList(list);
-            List<Integer> addList;
             while(idx < N){
                 if(sum+nums[idx]==target){
-                    newList.add(nums[idx]);
-                    addList = cloneList(newList);
-                    if(!ans.contains(addList))
-                        ans.add(addList);
-                    newList.remove(3);
+                    list.add(nums[idx]);
+                    if(!ans.contains(list))
+                        ans.add(cloneList(list));
+                    list.remove(3);
                 }
                 idx++;
             }
