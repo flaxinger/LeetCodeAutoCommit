@@ -5,6 +5,7 @@ class Solution {
         int s = 0;
         int e = string.length()-1;
         if(e == 0) return true;
+        if(string.charAt(0) == '-') return false;
         while(s <= e && string.charAt(s) == string.charAt(e)){
             s++;
             e--;
