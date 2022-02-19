@@ -1,17 +1,15 @@
 class Solution {
     public boolean isPalindrome(int x) {
         
-        String string = String.valueOf(x);
-        int s = 0;
-        int e = string.length()-1;
-        if(e == 0) return true;
-        if(string.charAt(0) == '-' || string.charAt(0) == '+') return false;
-        while(s <= e && string.charAt(s) == string.charAt(e)){
-            s++;
-            e--;
+        int n = x;
+        int comp = 0;
+        if(x < 0) return false;
+        while(n > 0){
+            comp = comp*10+n%10;
+            n/=10;
         }
-        if(s<=e)
-            return false;
-        return true;
+        if(comp == x) return true;
+        return false;
+        
     }
 }
