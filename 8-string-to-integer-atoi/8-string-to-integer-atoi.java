@@ -1,47 +1,31 @@
+import java.math.*;
+
 class Solution {
-    String MAX = "+2147483647";
-    String MIN = "-2147483648";
+    BigInteger MAX = new BigInteger("+2147483647");
+    BigInteger MIN = new BigInteger("-2147483648");
     
     public int myAtoi(String s) {
+        
         s = refine(s);
-
+        
         while(1 < s.length() && s.charAt(1) == '0'){
             s = s.substring(0,1)+s.substring(2);
         }
-        
         if(s.length() == 0 || s.equals("+") || s.equals("-")) return 0;
         
+        BigInteger num = new BigInteger(s);
         
-        if(s.charAt(0) == '-'){
-            if(s.length() > 11){
-                return Integer.MIN_VALUE;
-            }
-            if(s.length() == 11){
-                for(int i = 0; i < 11; i++){
-                    if(MIN.charAt(i) != s.charAt(i)){
-                        if(MIN.charAt(i) < s.charAt(i)) return Integer.MIN_VALUE;
-                        else break;
-                    }
-                }   
-            }
-            return Integer.valueOf(s);
-            
+        if(num.compareTo(BigInteger.ZERO)< 0){
+            if(num.compareTo(MIN) < 0)
+                return MIN.intValue();
+            return num.intValue();
         }
         else{
-            if(s.length() > 11){
-                return Integer.MAX_VALUE;
+            if(num.compareTo(MAX) > 0){
+                return MAX.intValue();
             }
-            if(s.length() == 11){
-                for(int i = 0; i < 11; i++){
-                    if(MAX.charAt(i) != s.charAt(i)){
-                        if(MAX.charAt(i) < s.charAt(i)) return Integer.MAX_VALUE;
-                        else break;
-                    }
-                }   
-            }
-            return Integer.valueOf(s);
+            return num.intValue();
         }
-
     }
     
     private String refine(String s){
@@ -64,5 +48,4 @@ class Solution {
         
         return result.toString();
     }
-    
 }
