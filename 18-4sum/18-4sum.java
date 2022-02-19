@@ -23,14 +23,12 @@ class Solution {
         }
         else{
             int lookingFor = target-sum;
-            int cur = Integer.MIN_VALUE;
-            while(idx < N){
-                if(nums[idx]==lookingFor && nums[idx] > cur){
+            while(idx < N && nums[idx] <= lookingFor){
+                if(nums[idx]==lookingFor){
                     list.add(nums[idx]);
                     if(!ans.contains(list))
                         ans.add(cloneList(list));
                     list.remove(3);
-                    cur = nums[idx];
                 }
                 idx++;
             }
