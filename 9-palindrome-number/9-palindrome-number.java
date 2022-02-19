@@ -4,8 +4,8 @@ class Solution {
         String string = String.valueOf(x);
         int s = 0;
         int e = string.length()-1;
-        
-        while(e >= 0 && s <= e && string.charAt(s) == string.charAt(e)){
+        if(e == 0) return true;
+        while(s <= e && string.charAt(s) == string.charAt(e)){
             s++;
             e--;
         }
