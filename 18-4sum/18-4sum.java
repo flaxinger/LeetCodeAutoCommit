@@ -9,8 +9,6 @@ class Solution {
         List<Integer> tmp = reduce(_nums);
         nums = tmp.toArray(new Integer[0]);
         N = nums.length;
-        for(Integer i: nums)
-            System.out.println(i);
         traverse(new ArrayList<>(), 0, 0);
         
         return ans;
