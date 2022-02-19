@@ -4,10 +4,8 @@ class Solution {
     Integer[] nums;
     List<List<Integer>> ans = new ArrayList<>();
     public List<List<Integer>> fourSum(int[] _nums, int _target) {
-        
         target = _target;
-        List<Integer> tmp = reduce(_nums);
-        nums = tmp.toArray(new Integer[0]);
+        nums = reduce(_nums).toArray(new Integer[0]);
         N = nums.length;
         Arrays.sort(nums);
         traverse(new ArrayList<>(), 0, 0);
@@ -24,13 +22,15 @@ class Solution {
             }
         }
         else{
-            int lookingFor = target - sum;
-            while(idx < N){
+            int lookingFor = target-sum;
+            int cur = Integer.MIN_VALUE;
+            while(idx < N && nums[idx] > cur){
                 if(nums[idx]==lookingFor){
                     list.add(nums[idx]);
                     if(!ans.contains(list))
                         ans.add(cloneList(list));
                     list.remove(3);
+                    cur = nums[idx];
                 }
                 idx++;
             }
