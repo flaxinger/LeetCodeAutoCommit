@@ -24,8 +24,9 @@ class Solution {
             }
         }
         else{
+            int lookingFor = target - sum;
             while(idx < N){
-                if(sum+nums[idx]==target){
+                if(nums[idx]==lookingFor){
                     list.add(nums[idx]);
                     if(!ans.contains(list))
                         ans.add(cloneList(list));
