@@ -1,63 +1,41 @@
 class Solution {
     
-    int N, target;
-    Integer[] nums;
-    List<List<Integer>> ans = new ArrayList<>();
-    public List<List<Integer>> fourSum(int[] _nums, int _target) {
-        
-        target = _target;
-        List<Integer> tmp = reduce(_nums);
-        nums = tmp.toArray(new Integer[0]);
-        N = nums.length;
-        traverse(new ArrayList<>(), 0, 0);
-        
-        return ans;
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+        Arrays.sort(nums);
+        return kSum(nums, 0, 4, target);
     }
-    
-    private void traverse(List<Integer> list, int sum, int idx){
-        
-        if(list.size() < 3){
-            while(idx < N){
-                list.add(nums[idx]);
-                traverse(list, sum+nums[idx], ++idx);
-                list.remove(list.size()-1);
-            }
-        }
-        else{
-            List<Integer> newList = cloneList(list);
-            List<Integer> addList;
-            while(idx < N){
-                if(sum+nums[idx]==target){
-                    newList.add(nums[idx]);
-                    addList = cloneList(newList);
-                    Collections.sort(addList);
-                    if(!ans.contains(addList))
-                        ans.add(addList);
-                    newList.remove(3);
+    private List<List<Integer>> kSum (int[] nums, int start, int k, int target) {
+        int len = nums.length;
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        if(k == 2) { //two pointers from left and right
+            int left = start, right = len - 1;
+            while(left < right) {
+                int sum = nums[left] + nums[right];
+                if(sum == target) {
+                    List<Integer> path = new ArrayList<Integer>();
+                    path.add(nums[left]);
+                    path.add(nums[right]);
+                    res.add(path);
+                    while(left < right && nums[left] == nums[left + 1]) left++;
+                    while(left < right && nums[right] == nums[right - 1]) right--;
+                    left++;
+                    right--;
+                } else if (sum < target) { //move left
+                    left++;
+                } else { //move right
+                    right--;
                 }
-                idx++;
+            }
+        } else {
+            for(int i = start; i < len - (k - 1); i++) {
+                if(i > start && nums[i] == nums[i - 1]) continue;
+                List<List<Integer>> temp = kSum(nums, i + 1, k - 1, target - nums[i]);
+                for(List<Integer> t : temp) {
+                   t.add(0, nums[i]);
+                }                    
+                res.addAll(temp);
             }
         }
-    }
-       
-    private List<Integer> cloneList(List<Integer> list){
-        List<Integer> result = new ArrayList<>();
-        for(Integer i: list){
-            result.add(i);
-        }
-        return result;
-    }
-    
-    private List<Integer> reduce(int[] list){
-        Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-        List<Integer> result = new ArrayList<>();
-        for(Integer i: list){
-            map.putIfAbsent(i, 0);
-            if(map.get(i) < 4){
-                result.add(i);
-                map.put(i, map.get(i)+1);
-            }
-        }
-        return result;
+        return res;
     }
 }
