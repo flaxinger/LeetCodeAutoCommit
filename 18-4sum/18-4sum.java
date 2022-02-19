@@ -4,11 +4,13 @@ class Solution {
     Integer[] nums;
     List<List<Integer>> ans = new ArrayList<>();
     public List<List<Integer>> fourSum(int[] _nums, int _target) {
+        
         target = _target;
-        nums = reduce(_nums).toArray(new Integer[0]);
-        N = nums.length-1;
-        Arrays.sort(nums);
+        List<Integer> tmp = reduce(_nums);
+        nums = tmp.toArray(new Integer[0]);
+        N = nums.length;
         traverse(new ArrayList<>(), 0, 0);
+        
         return ans;
     }
     
@@ -17,16 +19,23 @@ class Solution {
         if(list.size() < 3){
             while(idx < N){
                 list.add(nums[idx]);
-                traverse(cloneList(list), sum+nums[idx], ++idx);
+                traverse(list, sum+nums[idx], ++idx);
                 list.remove(list.size()-1);
             }
         }
         else{
-            idx = isComb(idx, target-sum);
-            if(idx > 0){
-                list.add(nums[idx]);
-                if(!ans.contains(list))
-                    ans.add(list);
+            List<Integer> newList = cloneList(list);
+            List<Integer> addList;
+            while(idx < N){
+                if(sum+nums[idx]==target){
+                    newList.add(nums[idx]);
+                    addList = cloneList(newList);
+                    Collections.sort(addList);
+                    if(!ans.contains(addList))
+                        ans.add(addList);
+                    newList.remove(3);
+                }
+                idx++;
             }
         }
     }
@@ -50,23 +59,5 @@ class Solution {
             }
         }
         return result;
-    }
-    
-    private int isComb(int start, int tar){
-        
-        if(nums[start] == tar) return start;
-        
-        int mid = 0;
-        int end = N;
-        while(start+1 < end){
-            mid = (start+end)/2;
-            if(nums[mid] < tar)
-                start = mid;
-            else
-                end = mid;
-        }
-        
-        if(nums[end]==tar) return end;
-        return -1;
     }
 }
