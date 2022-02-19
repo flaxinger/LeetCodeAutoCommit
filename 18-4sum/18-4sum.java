@@ -9,8 +9,8 @@ class Solution {
         List<Integer> tmp = reduce(_nums);
         nums = tmp.toArray(new Integer[0]);
         N = nums.length;
+        Arrays.sort(nums);
         traverse(new ArrayList<>(), 0, 0);
-        
         return ans;
     }
     
@@ -30,7 +30,6 @@ class Solution {
                 if(sum+nums[idx]==target){
                     newList.add(nums[idx]);
                     addList = cloneList(newList);
-                    Collections.sort(addList);
                     if(!ans.contains(addList))
                         ans.add(addList);
                     newList.remove(3);
