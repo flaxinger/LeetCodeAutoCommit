@@ -24,7 +24,7 @@ class Solution {
                 start = mid+1
             }
         }
-        return nums[end.coerceAtMost(N-1)]
+        return nums[start.coerceAtMost(N-1)]
     }
     
     private fun isMin(idx: Int): Boolean {
