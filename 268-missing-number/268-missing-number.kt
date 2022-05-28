@@ -1,5 +1,5 @@
 class Solution {
     fun missingNumber(nums: IntArray): Int {
-        return IntRange(1, nums.size).sum() - nums.sum()
+        return nums.size*(nums.size+1)/2 - nums.sum()
     }
 }
