@@ -3,18 +3,22 @@ class Solution {
     
     fun numSubarrayProductLessThanK(nums: IntArray, k: Int): Int {
         
-        var ans = 0
-        for(i in 0 until nums.size){
-            if(nums[i]<k){
-                ans++
-                for(j in i+1 until nums.size){
-                    nums[i]*=nums[j]
-                    if(nums[i]>=k)
-                        break
-                    ans++
-                }
+        if (k == 0 || k == 1) return 0
+
+        var start = 0
+        var end = 0
+        var mul = 1
+        var cnt = 0
+
+        while (end < nums.size) {
+            end++
+            mul *= nums[end-1]
+            while (mul >= k) {
+                mul /= nums[start]
+                start++
             }
+            cnt += (end-start)
         }
-        return ans
+        return cnt
     }
 } 
