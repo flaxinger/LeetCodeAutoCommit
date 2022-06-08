@@ -1,10 +1,8 @@
 class Solution {
       
     fun removePalindromeSub(s: String): Int {
-        if(s=="") return 0        
-        var min = 2
-        min = Math.min(min, removePalindromeSub(findAndRemovePalindrome(StringBuilder(s)))+1)
-        return min
+        if(findAndRemovePalindrome(StringBuilder(s)) == "") return 1
+        return 2
     }
     
     fun findAndRemovePalindrome(s: StringBuilder): String{
