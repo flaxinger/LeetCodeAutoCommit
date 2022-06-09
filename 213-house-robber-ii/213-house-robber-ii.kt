@@ -13,14 +13,6 @@ class Solution {
         for(i in 2 until N){
             dp[1][i] = Math.max(nums[i]+dp[1][i-2], dp[1][i-1])
         }
-        //print
-        // for(arr in dp){
-        //     for(a in arr){
-        //         print("$a, ")
-        //     }
-        //     println()
-        // }
-        // println()
         return Math.max(dp[0][N-2], dp[1][N-1])
     }
 }
