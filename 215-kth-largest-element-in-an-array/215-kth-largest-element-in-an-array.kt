@@ -1,11 +1,15 @@
 class Solution {
     fun findKthLargest(nums: IntArray, k: Int): Int {
-              
-        if(nums.size==1) return nums[0]
-        var pivot = nums[0]
-        var center = 1
-        var idx = 1
-        while(idx < nums.size){
+        return find(nums, 0, nums.size, k)
+    }
+    
+    fun find(nums: IntArray, start: Int, end: Int, k: Int): Int{
+        
+        if(start==end-1) return nums[start]
+        var pivot = nums[start]
+        var center = start+1
+        var idx = start+1
+        while(idx < end){
             if(nums[idx]>pivot){
                 swap(nums, center, idx)
                 center++
@@ -13,11 +17,11 @@ class Solution {
             idx++
         }
         center--
-        swap(nums, center, 0)
+        swap(nums, center, start)
         
         return if(center+1 == k) nums[center] 
-        else if(k < center+1) findKthLargest(nums.copyOfRange(0, center), k)
-        else findKthLargest(nums.copyOfRange(center+1, nums.size), k-(center+1))
+        else if(k < center+1) find(nums, start, center, k)
+        else find(nums, center+1, end, k)
     }
     
     fun swap(arr: IntArray, i: Int, j: Int){
